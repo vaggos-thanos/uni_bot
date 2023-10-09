@@ -110,8 +110,8 @@ export default class SelectRolesService {
                     interaction.editReply({content: `${member} have been removed from the <@&${this.roleIds['gamer']}> role!`, ephemeral: true})
                     return;
                 }
-                await member.roles.add(this.roleIds['male'])
-                interaction.editReply({content: `${member} have been given the <@&${this.roleIds['male']}> role!`, ephemeral: true})
+                await member.roles.add(this.roleIds['gamer'])
+                interaction.editReply({content: `${member} have been given the <@&${this.roleIds['gamer']}> role!`, ephemeral: true})
             break;
         }
     }
