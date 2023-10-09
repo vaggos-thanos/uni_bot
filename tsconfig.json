@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "ESNext",
+        "module": "CommonJS",
+        "outDir": "dist",
+        "removeComments": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "noImplicitThis": false,
+        "pretty": true,
+        "strictNullChecks": false,
+        "noImplicitAny": false,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "resolveJsonModule": true,
+        "moduleResolution": "Node",
+        "allowImportingTsExtensions": false,
+        "paths": {
+            
+        }
+    },
+    "tsc-alias": {
+        "outDir": "dist",
+        "watch": true,
+        "debug": true,
+        "resolveFullPaths": false,
+        "verbose": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
+}
