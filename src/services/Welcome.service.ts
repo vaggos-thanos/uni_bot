@@ -29,7 +29,7 @@ export default class WelcomeService {
         const embed = new EmbedBuilder()
             .setColor('#34eb92')
             .setTitle(`Welcome to our community, ${member.user.username}!`)
-            .setDescription('We are excited to have you here.')
+            .setDescription('We are excited to have you here. Please read the <#1159020448886046740> and enjoy your stay! \nIf you have any questions, feel free to ask in <#1160546329936797737> or <#1160546386291466300> \nPlease select you roles in <#1160701428034187354>')
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
             .setFooter({text: 'Thanks for joining!'});
