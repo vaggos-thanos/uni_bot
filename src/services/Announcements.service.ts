@@ -8,6 +8,7 @@ export default class AnnouncementsService {
     announcChannel: string;
     safeStart: boolean = true;
     lastSendDate: string;
+    sendSpeficic: Array<any> = [];
 
     constructor(client: Bot) { 
         this.client = client;
@@ -19,7 +20,7 @@ export default class AnnouncementsService {
         this.startLogic(safeStart);
         setInterval(async () => {
             this.startLogic(safeStart);
-        }, 1000 * 60 * 60 * 12);
+        }, 1000 * 60 * 60 * 1);
     }
 
     private async startLogic(safeStart?: boolean) {
@@ -39,7 +40,14 @@ export default class AnnouncementsService {
     async sendAnnouncement(feed) {
         const guild = await this.client.guilds.fetch(this.client.guildId)
         const channel = await guild.channels.cache.get(this.announcChannel);
-        for(const data of feed.items.reverse()) {
+        let sendData;
+        if(this.sendSpeficic.length > 0) {
+            sendData = this.sendSpeficic.reverse();
+        } else {
+            sendData = feed.items.reverse();
+        }
+
+        for(const data of sendData) {
             const words = data.title.split(' ');
             const truncatedWords = words.slice(0, 14);
             const truncatedTitle = truncatedWords.join(' ');
@@ -69,6 +77,21 @@ export default class AnnouncementsService {
                 closestDiff = diff;
             }
         }
+
+        const todaysAnnouncements = [];
+        const newToday = new Date().setHours(0, 0, 0, 0);
+        for (const item of items) {
+            const itemDate = new Date(item.isoDate).setHours(0, 0, 0, 0);
+            if (itemDate === newToday) {
+                todaysAnnouncements.push(item);
+            }
+        }
+        if(todaysAnnouncements.length > 0) {
+            this.sendSpeficic = todaysAnnouncements;
+        } else {
+            this.sendSpeficic = [];
+        }
+
         const update = await this.client.dbManager.update_row('Guilds', 'lastSendDate', closestDay.isoDate, 'guild_id', this.client.guildId);
         if(!update.data) return console.log('Failed to update lastSendDate');
         this.client.GuildConfigs.get(this.client.guildId).lastSendDate = closestDay.isoDate;
