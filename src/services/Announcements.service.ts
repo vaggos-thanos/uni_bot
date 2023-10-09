@@ -20,7 +20,7 @@ export default class AnnouncementsService {
         this.startLogic(safeStart);
         setInterval(async () => {
             this.startLogic(safeStart);
-        }, 1000 * 60 * 60 * 1);
+        }, 1000 * 60 * 30);
     }
 
     private async startLogic(safeStart?: boolean) {
@@ -82,10 +82,11 @@ export default class AnnouncementsService {
         const newToday = new Date().setHours(0, 0, 0, 0);
         for (const item of items) {
             const itemDate = new Date(item.isoDate).setHours(0, 0, 0, 0);
-            if (itemDate === newToday) {
+            if (itemDate === newToday && new Date(this.lastSendDate).getTime() < itemDate) {
                 todaysAnnouncements.push(item);
             }
         }
+
         if(todaysAnnouncements.length > 0) {
             this.sendSpeficic = todaysAnnouncements;
         } else {
